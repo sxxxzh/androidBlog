@@ -1,0 +1,327 @@
+2025-11-13 20:27:07.239  1553-1553  vendor.qti...al-service ven...qti.hardware.perf-hal-service  E  ExtendedPerfBoost: extended_perfboost_verification() 738: Ok, set boost params. hintid=4225 hinttype=1 prio=3, clientpid=2644 packagename=com.blog.myandroidblog params=boost:1 cpu0:1804800 cpu4:2496000 cpu7:2822400 cpumask:ff
+2025-11-13 20:27:07.245  8937-8937  Zygote                  usap64                               E  process_name_ptr:8937 com.blog.myandroidblog
+2025-11-13 20:27:07.245  8937-8937  Zygote                  usap64                               E  SetMemoryProtected process_name_ptr:8937 com.blog.myandroidblog
+2025-11-13 20:27:07.303  1553-1553  vendor.qti...al-service ven...qti.hardware.perf-hal-service  E  ExtendedPerfBoost: extended_perfboost_verification() 738: Ok, set boost params. hintid=4225 hinttype=1 prio=3, clientpid=2644 packagename=com.blog.myandroidblog params=boost:1 cpu0:1804800 cpu4:2496000 cpu7:2822400 cpumask:ff
+2025-11-13 20:27:07.314  1553-1553  vendor.qti...al-service ven...qti.hardware.perf-hal-service  E  ExtendedPerfBoost: extended_perfboost_verification() 738: Ok, set boost params. hintid=4226 hinttype=1 prio=2, clientpid=2644 packagename=com.blog.myandroidblog params=boost:1 cpu0:1804800 cpu4:2496000 cpu7:2822400 cpumask:ff
+2025-11-13 20:27:07.387  5966-7266  SuggestManager          com.miui.securitycenter.remote       E  openApp name = com.blog.myandroidblog
+---------------------------- PROCESS STARTED (8937) for package com.blog.myandroidblog ----------------------------
+2025-11-13 20:27:07.585  8937-8937  ActivityThread          com.blog.myandroidblog               D  setEmbeddedParam packageName=com.blog.myandroidblog processName=com.blog.myandroidblog isEmbedded=false isIsolated=false
+2025-11-13 20:27:07.594  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/data/com.blog.myandroidblog/code_cache/.overlay/base.apk/classes4.dm': No such file or directory
+2025-11-13 20:27:07.595  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/data/com.blog.myandroidblog/code_cache/.overlay/base.apk/classes8.dm': No such file or directory
+2025-11-13 20:27:07.596  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/data/com.blog.myandroidblog/code_cache/.overlay/base.apk/classes3.dm': No such file or directory
+2025-11-13 20:27:07.597  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/data/com.blog.myandroidblog/code_cache/.overlay/base.apk/classes6.dm': No such file or directory
+2025-11-13 20:27:07.597  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/app/~~bk59gf14iniyhi2ityrO4w==/com.blog.myandroidblog-i5yru47TYXHIf948P6S7Zw==/base.dm': No such file or directory
+2025-11-13 20:27:07.597  8937-8937  ziparchive              com.blog.myandroidblog               W  Unable to open '/data/app/~~bk59gf14iniyhi2ityrO4w==/com.blog.myandroidblog-i5yru47TYXHIf948P6S7Zw==/base.dm': No such file or directory
+2025-11-13 20:27:07.687  8937-8937  nativeloader            com.blog.myandroidblog               D  Configuring clns-7 for other apk /data/app/~~bk59gf14iniyhi2ityrO4w==/com.blog.myandroidblog-i5yru47TYXHIf948P6S7Zw==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~bk59gf14iniyhi2ityrO4w==/com.blog.myandroidblog-i5yru47TYXHIf948P6S7Zw==/lib/arm64:/data/app/~~bk59gf14iniyhi2ityrO4w==/com.blog.myandroidblog-i5yru47TYXHIf948P6S7Zw==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.blog.myandroidblog
+2025-11-13 20:27:07.695  8937-8937  Perf                    com.blog.myandroidblog               I  Connecting to perf service.
+2025-11-13 20:27:07.698  8937-8937  GraphicsEnvironment     com.blog.myandroidblog               V  Currently set values for:
+2025-11-13 20:27:07.698  8937-8937  GraphicsEnvironment     com.blog.myandroidblog               V    angle_gl_driver_selection_pkgs=[]
+2025-11-13 20:27:07.698  8937-8937  GraphicsEnvironment     com.blog.myandroidblog               V    angle_gl_driver_selection_values=[]
+2025-11-13 20:27:07.698  8937-8937  GraphicsEnvironment     com.blog.myandroidblog               V  Global.Settings values are invalid: number of packages: 0, number of values: 0
+2025-11-13 20:27:07.698  8937-8937  GraphicsEnvironment     com.blog.myandroidblog               V  App is not on the allowlist for updatable production driver.
+2025-11-13 20:27:07.700  8937-9849  ActivityThread          com.blog.myandroidblog               I  TrafficStats init done
+2025-11-13 20:27:07.711  8937-9849  ForceDarkHelperStubImpl com.blog.myandroidblog               I  initialize for com.blog.myandroidblog , ForceDarkOrigin
+2025-11-13 20:27:07.713  8937-9849  nativeloader            com.blog.myandroidblog               D  Load libforcedarkimpl.so using system ns (caller=/system_ext/framework/miui-framework.jar): ok
+2025-11-13 20:27:07.713  8937-9849  HWUI                    com.blog.myandroidblog               D  JNI_OnLoad success
+2025-11-13 20:27:07.713  8937-9849  MiuiForceDarkConfig     com.blog.myandroidblog               I  setConfig density:2.625000, mainRule:0, secondaryRule:0, tertiaryRule:0
+2025-11-13 20:27:07.715  8937-8937  libc                    com.blog.myandroidblog               W  Access denied finding property "vendor.boostfwk.frameprefetcher"
+2025-11-13 20:27:07.715  8937-9859  ziparchive              com.blog.myandroidblog               W  Unable to open '/system/framework/QXPerformance.dm': No such file or directory
+2025-11-13 20:27:07.715  8937-9859  ziparchive              com.blog.myandroidblog               W  Unable to open '/system/framework/QXPerformance.dm': No such file or directory
+2025-11-13 20:27:07.717  8937-9849  ActivityThread          com.blog.myandroidblog               I  Miui Feature Init done
+2025-11-13 20:27:07.724  8937-8937  WM-WrkMgrInitializer    com.blog.myandroidblog               D  Initializing WorkManager with default configuration.
+2025-11-13 20:27:07.746  8937-8937  WM-PackageManagerHelper com.blog.myandroidblog               D  Skipping component enablement for androidx.work.impl.background.systemjob.SystemJobService
+2025-11-13 20:27:07.747  8937-8937  WM-Schedulers           com.blog.myandroidblog               D  Created SystemJobScheduler and enabled SystemJobService
+2025-11-13 20:27:07.760  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:07.762  8937-8937  UnionPowerNotifier      com.blog.myandroidblog               D  check_union_power_ioctl -1
+2025-11-13 20:27:07.765  8937-9849  ActivityThread          com.blog.myandroidblog               I  HardwareRenderer preload  done
+2025-11-13 20:27:07.773  8937-9865  libc                    com.blog.myandroidblog               W  Access denied finding property "vendor.migl.debug"
+2025-11-13 20:27:07.773  8937-9865  libMiGL                 com.blog.myandroidblog               D  SuperResolution SR initSR mBaseSRWidthSize: 0, mBaseSRHeightSize: 0, mTargetSRWidthSize: 0, mTargetSRHeightSize: 0
+2025-11-13 20:27:07.773  8937-9865  libMiGL                 com.blog.myandroidblog               I  EnableDR: 0
+2025-11-13 20:27:07.773  8937-9865  libMiGL                 com.blog.myandroidblog               D  mDFIInterval: -1
+2025-11-13 20:27:07.776  8937-9865  AdrenoGLES-0            com.blog.myandroidblog               I  QUALCOMM build                   : c1fe339905, Id5fe42143e
+                                                                                                    Build Date                       : 01/23/25
+                                                                                                    OpenGL ES Shader Compiler Version: EV031.36.08.30
+                                                                                                    Local Branch                     : 
+                                                                                                    Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.1.0.R1.11.00.00.816.269
+                                                                                                    Remote Branch                    : NONE
+                                                                                                    Reconstruct Branch               : NOTHING
+2025-11-13 20:27:07.776  8937-9865  AdrenoGLES-0            com.blog.myandroidblog               I  Build Config                     : S P 12.1.1 AArch64
+2025-11-13 20:27:07.776  8937-9865  AdrenoGLES-0            com.blog.myandroidblog               I  Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+2025-11-13 20:27:07.776  8937-9865  AdrenoGLES-0            com.blog.myandroidblog               I  Driver Version                   : 0615.95
+2025-11-13 20:27:07.781  8937-9865  AdrenoGLES-0            com.blog.myandroidblog               I  PFP: 0x01730158, ME: 0x00000000
+2025-11-13 20:27:07.816  8937-9866  nativeloader            com.blog.myandroidblog               D  Configuring clns-8 for other apk /system_ext/app/miuisystem/miuisystem.apk. target_sdk_version=34, uses_libraries=ALL, library_path=/product/app/ContentCatcherOS2/lib/arm64:/product/app/ContentCatcherOS2/ContentCatcherOS2.apk!/lib/arm64-v8a:/system_ext/priv-app/RtMiCloudSDK/RtMiCloudSDK.apk!/lib/arm64-v8a:/system_ext/app/miuisystem/miuisystem.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+2025-11-13 20:27:07.816  8937-9866  nativeloader            com.blog.myandroidblog               D  Extending system_exposed_libraries: libbinauralrenderer_wrapper.qti.so:libhoaeffects.qti.so:libmisys_jni.xiaomi.so:libpag.hyperos.so:libffavc.hyperos.so:libxiaomi_modemdumpsdx55_jni.modem.so:libxiaomi_modemdump_jni.modem.so:libmodemsmartengine_jni.modem.so:libupdateprof.qti.so:libthermalclient.qti.so:libdiag_system.qti.so:libqape.qti.so:libqesdk_ndk_platform.qti.so:liblistenjni.qti.so
+2025-11-13 20:27:07.828  8937-9866  nativeloader            com.blog.myandroidblog               D  Configuring clns-9 for other apk /system_ext/priv-app/RtMiCloudSDK/RtMiCloudSDK.apk. target_sdk_version=34, uses_libraries=ALL, library_path=/product/app/ContentCatcherOS2/lib/arm64:/product/app/ContentCatcherOS2/ContentCatcherOS2.apk!/lib/arm64-v8a:/system_ext/priv-app/RtMiCloudSDK/RtMiCloudSDK.apk!/lib/arm64-v8a:/system_ext/app/miuisystem/miuisystem.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+2025-11-13 20:27:07.828  8937-9866  nativeloader            com.blog.myandroidblog               D  Extending system_exposed_libraries: libbinauralrenderer_wrapper.qti.so:libhoaeffects.qti.so:libmisys_jni.xiaomi.so:libpag.hyperos.so:libffavc.hyperos.so:libxiaomi_modemdumpsdx55_jni.modem.so:libxiaomi_modemdump_jni.modem.so:libmodemsmartengine_jni.modem.so:libupdateprof.qti.so:libthermalclient.qti.so:libdiag_system.qti.so:libqape.qti.so:libqesdk_ndk_platform.qti.so:liblistenjni.qti.so
+2025-11-13 20:27:07.830  8937-9866  ApplicationLoaders      com.blog.myandroidblog               D  Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+2025-11-13 20:27:07.830  8937-9866  ApplicationLoaders      com.blog.myandroidblog               D  Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+2025-11-13 20:27:07.831  8937-9866  ApplicationLoaders      com.blog.myandroidblog               D  Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+2025-11-13 20:27:07.844  8937-9866  nativeloader            com.blog.myandroidblog               D  InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-aarch64-android.so:libclang_rt.asan-arm-android.so:libclang_rt.hwasan-aarch64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+2025-11-13 20:27:07.844  8937-9866  nativeloader            com.blog.myandroidblog               D  Configuring product-clns-10 for unbundled product apk /product/app/ContentCatcherOS2/ContentCatcherOS2.apk. target_sdk_version=34, uses_libraries=, library_path=/product/app/ContentCatcherOS2/lib/arm64:/product/app/ContentCatcherOS2/ContentCatcherOS2.apk!/lib/arm64-v8a:/system_ext/priv-app/RtMiCloudSDK/RtMiCloudSDK.apk!/lib/arm64-v8a:/system_ext/app/miuisystem/miuisystem.apk!/lib/arm64-v8a:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/product/lib64:/system/product/lib64
+2025-11-13 20:27:07.844  8937-9866  nativeloader            com.blog.myandroidblog               D  InitVndkspLibrariesProduct: VNDK is deprecated with product
+2025-11-13 20:27:07.852  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  initViewContentFetcherClass
+2025-11-13 20:27:07.852  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  getInterceptorPackageInfo
+2025-11-13 20:27:07.852  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  getInitialApplication took 0ms
+2025-11-13 20:27:07.852  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  packageInfo.packageName: com.miui.contentcatcher
+2025-11-13 20:27:07.853  8937-8937  libc                    com.blog.myandroidblog               W  Access denied finding property "ro.vendor.df.effect.conflict"
+2025-11-13 20:27:07.849  8937-8937  g.myandroidblog         com.blog.myandroidblog               W  type=1400 audit(0.0:3181013): avc:  denied  { read } for  name="u:object_r:vendor_displayfeature_prop:s0" dev="tmpfs" ino=466 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:vendor_displayfeature_prop:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:07.856  8937-8937  SecurityManager         com.blog.myandroidblog               D  checkAccessControl flag1
+2025-11-13 20:27:07.857  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  initViewContentFetcherClass took 5ms
+2025-11-13 20:27:07.857  8937-9866  ContentCatcher          com.blog.myandroidblog               I  ViewContentFetcher : ViewContentFetcher
+2025-11-13 20:27:07.857  8937-9866  ViewContentFactory      com.blog.myandroidblog               D  createInterceptor took 6ms
+2025-11-13 20:27:07.858  8937-9866  ContentCatcherManager   com.blog.myandroidblog               E  failed to get ContentCatcherService.
+2025-11-13 20:27:07.859  8937-9866  ContentCatcherManager   com.blog.myandroidblog               E  failed to get ContentCatcherService.
+2025-11-13 20:27:07.862  8937-9866  ContentCatcher          com.blog.myandroidblog               I  SettingTrigger : register screen QA status observer com.blog.myandroidblog.MainActivity
+2025-11-13 20:27:07.870  8937-8937  FramePredict            com.blog.myandroidblog               D  FramePredict init: false
+2025-11-13 20:27:07.870  8937-9866  ContentCatcher          com.blog.myandroidblog               I  SettingTrigger : register global collect status observer com.blog.myandroidblog.MainActivity
+2025-11-13 20:27:07.873  8937-8937  FramePredict            com.blog.myandroidblog               D  init success
+2025-11-13 20:27:07.876  8937-9869  FramePredict            com.blog.myandroidblog               E  registerContentObserver fail
+2025-11-13 20:27:07.907  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:07.907  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:07.908  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:07.910  8937-8937  DecorViewImmersiveImpl  com.blog.myandroidblog               D  onAttachedToWindow:com.blog.myandroidblog/com.blog.myandroidblog.MainActivity
+2025-11-13 20:27:08.082  8937-8937  AuthStore               com.blog.myandroidblog               D  getCurrentUser no persisted user
+2025-11-13 20:27:08.109  8937-8937  AuthStore               com.blog.myandroidblog               D  isAuthenticated mem=false persisted=false result=false
+2025-11-13 20:27:08.183  8937-8937  libc                    com.blog.myandroidblog               W  Access denied finding property "vendor.display.enable_optimal_refresh_rate"
+2025-11-13 20:27:08.177  8937-8937  g.myandroidblog         com.blog.myandroidblog               W  type=1400 audit(0.0:3181014): avc:  denied  { read } for  name="u:object_r:vendor_display_prop:s0" dev="tmpfs" ino=465 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:vendor_display_prop:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.201  8937-9865  g.myandroidblog         com.blog.myandroidblog               D  MiuiProcessManagerServiceStub setSchedFifo
+2025-11-13 20:27:08.201  8937-9865  MiuiProcessManagerImpl  com.blog.myandroidblog               I  setSchedFifo pid:8937, mode:3
+2025-11-13 20:27:08.206  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.206  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.201  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181015): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.208  8937-8937  VRI[MainActivity]       com.blog.myandroidblog               D  vri.reportDrawFinished
+2025-11-13 20:27:08.208  8937-8937  NativeTurboSchedManager com.blog.myandroidblog               I  Load libmiui_runtime
+2025-11-13 20:27:08.209  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:08.242  8937-8937  AuthStore               com.blog.myandroidblog               D  initialize token=<empty> user=null:null
+2025-11-13 20:27:08.242  8937-8937  AuthStore               com.blog.myandroidblog               D  isAuthenticated mem=false persisted=false result=false
+2025-11-13 20:27:08.242  8937-8937  AuthStore               com.blog.myandroidblog               D  getCurrentUser no persisted user
+2025-11-13 20:27:08.242  8937-8937  AuthStore               com.blog.myandroidblog               D  getCurrentUser no persisted user
+2025-11-13 20:27:08.242  8937-8937  AuthStore               com.blog.myandroidblog               I  AppRoot init isAuthenticated=false user=null:null
+2025-11-13 20:27:08.256  8937-8937  System.err              com.blog.myandroidblog               W  SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2025-11-13 20:27:08.256  8937-8937  System.err              com.blog.myandroidblog               W  SLF4J: Defaulting to no-operation (NOP) logger implementation
+2025-11-13 20:27:08.256  8937-8937  System.err              com.blog.myandroidblog               W  SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2025-11-13 20:27:08.298  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:08.303  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:08.305  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.301  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181016): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.306  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.308  8937-8937  HandWritingStubImpl     com.blog.myandroidblog               I  refreshLastKeyboardType: 1
+2025-11-13 20:27:08.309  8937-8937  HandWritingStubImpl     com.blog.myandroidblog               I  getCurrentKeyboardType: 1
+2025-11-13 20:27:08.318  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.318  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.321  8937-8937  HandWritingStubImpl     com.blog.myandroidblog               I  getCurrentKeyboardType: 1
+2025-11-13 20:27:08.322  8540-8540  BaseInputMethodService  com.sohu.inputmethod.sogou.xiaomi    E  onStartInput app:com.blog.myandroidblog restarting:false
+2025-11-13 20:27:08.334  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.334  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.329  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181018): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.350  8937-9878  TrafficStats            com.blog.myandroidblog               D  tagSocket(184) with statsTag=0xffffffff, statsUid=-1
+2025-11-13 20:27:08.353  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.349  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181019): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.353  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.355  8937-9880  TrafficStats            com.blog.myandroidblog               D  tagSocket(185) with statsTag=0xffffffff, statsUid=-1
+2025-11-13 20:27:08.367  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.368  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.361  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181020): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.384  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.384  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.377  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181021): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.401  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.402  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.397  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181022): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:08.418  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.418  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.434  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.434  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.451  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.451  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.466  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.466  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.483  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.483  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.499  8937-9821  g.myandroidblog         com.blog.myandroidblog               I  Compiler allocated 5458KB to compile void android.view.ViewRootImpl.performTraversals()
+2025-11-13 20:27:08.500  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.500  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.516  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.516  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.532  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.532  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.549  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.549  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.565  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.565  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.583  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.583  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.603  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.603  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.615  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.615  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.631  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.631  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.648  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.648  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.664  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.664  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.680  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.681  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.697  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.697  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.714  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.714  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.731  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.731  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.747  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.747  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.764  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.764  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.780  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.780  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.796  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.796  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.812  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.812  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.829  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.829  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.846  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.846  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.863  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.863  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.879  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.879  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.895  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.895  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.912  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.913  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.928  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.928  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.945  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.945  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.961  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.961  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.978  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.978  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:08.994  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:08.994  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.011  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.011  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.027  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.027  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.044  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.044  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.060  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.060  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.078  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.078  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.094  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.094  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.110  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.110  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.127  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.127  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.143  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.144  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.160  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.160  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.177  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.177  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.193  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.193  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.209  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.210  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.226  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.226  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.243  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.243  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.259  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.259  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.276  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.276  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.292  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.292  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.315  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.315  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.331  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.331  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.348  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.348  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.345  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181079): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:09.365  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.365  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.361  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181080): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:09.381  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.377  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181081): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:09.382  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.398  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.398  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.393  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181082): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:09.418  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.419  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.413  8937-8937  RenderThread            com.blog.myandroidblog               W  type=1400 audit(0.0:3181083): avc:  denied  { getattr } for  path="/sys/module/metis/parameters/minor_window_app" dev="sysfs" ino=70540 scontext=u:r:untrusted_app:s0:c0,c258,c512,c768 tcontext=u:object_r:sysfs_migt:s0 tclass=file permissive=0 app=com.qti.qcc
+2025-11-13 20:27:09.429  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.429  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.446  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.446  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.463  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.464  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.481  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.481  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.498  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.498  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.514  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.514  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.530  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.530  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.546  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.547  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.564  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.564  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.581  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.581  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.597  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.597  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.614  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.614  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.640  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.640  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.648  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.649  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.661  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.662  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.677  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.677  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.696  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.696  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.713  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.713  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.728  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.728  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.743  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.743  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.760  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.760  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.776  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.776  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.793  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.793  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.810  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.810  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.827  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.827  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.845  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.845  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.860  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.861  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.879  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.880  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.895  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.895  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.912  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.912  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.929  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.929  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:09.945  8937-9865  LB                      com.blog.myandroidblog               E  fail to open file: No such file or directory
+2025-11-13 20:27:09.945  8937-9865  LB                      com.blog.myandroidblog               E  fail to open node: No such file or directory
+2025-11-13 20:27:11.270  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:11.430  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:11.498  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:11.564  8937-8937  FileUtils               com.blog.myandroidblog               E  err write to mi_exception_log
+2025-11-13 20:27:13.158  8937-9929  ProfileInstaller        com.blog.myandroidblog               D  Installing profile for com.blog.myandroidblog
