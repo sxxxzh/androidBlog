@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MyAndroidBlog" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.MyAndroidBlog" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    
+    <!-- Optional: Theme specifically for WebView activities with better keyboard handling -->
+    <style name="Theme.MyAndroidBlog.WebView" parent="Theme.MyAndroidBlog">
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
+    </style>
 </resources>

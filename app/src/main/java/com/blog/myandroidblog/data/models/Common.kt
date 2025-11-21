@@ -4,12 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Pagination(
-    val page: Int,
-    val limit: Int,
-    val total: Int,
-    val totalPages: Int,
-    val hasNext: Boolean,
-    val hasPrev: Boolean
+    val page: Int = 1,
+    val limit: Int = 10,
+    val total: Int = 0,
+    val pages: Int? = null,
+    val totalPages: Int? = null,
+    val hasNext: Boolean? = null,
+    val hasPrev: Boolean? = null
 )
 
 @Serializable

@@ -196,7 +196,7 @@ private fun CodeBlockEnhanced(block: ContentBlock.CodeBlock, isDarkMode: Boolean
                         val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                         val clip = android.content.ClipData.newPlainText("Code", block.content)
                         clipboard.setPrimaryClip(clip)
-                        showCopyToast = true
+                        android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
                     },
                 color = Color.Transparent
             ) {
@@ -214,12 +214,7 @@ private fun CodeBlockEnhanced(block: ContentBlock.CodeBlock, isDarkMode: Boolean
     }
     
     // Copy success toast (only show briefly)
-    if (showCopyToast) {
-        androidx.compose.runtime.LaunchedEffect(showCopyToast) {
-            kotlinx.coroutines.delay(1500)
-            showCopyToast = false
-        }
-    }
+    // no persistent toast UI needed
 }
 
 @Composable
@@ -356,7 +351,7 @@ private fun parseMarkdownToBlocks(markdown: String): List<ContentBlock> {
                         inTable = true
                         tableHeaders = tableRow
                         tableRows.clear()
-                    } else if (line.matches(Regex("^\\s*\\|?[\\s\\-:]+\\|[\\s\\-:]+\\|?\\s*$"))) {
+                    } else if (line.matches(Regex("^\\s*\\|?(?:\\s*[-:]+\\s*\\|)+\\s*[-:]+\\s*\\|?\\s*$"))) {
                         // Separator line - skip it
                         continue
                     } else {
@@ -463,9 +458,10 @@ private fun AnnotatedString.Builder.parseFormattedText(content: String, isDarkMo
         val italicMatch = Regex("【ITALIC:([^】]+)】").find(remainingText)
         val codeMatch = Regex("【CODE:([^】]+)】").find(remainingText)
         val strikeMatch = Regex("【STRIKE:([^】]+)】").find(remainingText)
+        val linkMatch = Regex("【LINK:([^|】]+)\\|([^】]+)】").find(remainingText)
         
         // Find the earliest match
-        val matches = listOfNotNull(boldMatch, italicMatch, codeMatch, strikeMatch)
+        val matches = listOfNotNull(boldMatch, italicMatch, codeMatch, strikeMatch, linkMatch)
         val earliestMatch = matches.minByOrNull { it.range.first }
         
         if (earliestMatch != null) {
@@ -493,11 +489,13 @@ private fun AnnotatedString.Builder.parseFormattedText(content: String, isDarkMo
                 boldMatch == earliestMatch -> "BOLD"
                 italicMatch == earliestMatch -> "ITALIC"
                 codeMatch == earliestMatch -> "CODE"
+                linkMatch == earliestMatch -> "LINK"
                 strikeMatch == earliestMatch -> "STRIKE"
                 else -> ""
             }
             
             val formattedText = earliestMatch.groupValues[1]
+            val formattedUrl = if (linkMatch == earliestMatch) earliestMatch.groupValues.getOrNull(2) else null
             
             // Check if formatted text contains nested markers
             if (formattedText.contains("【")) {
@@ -545,6 +543,18 @@ private fun AnnotatedString.Builder.parseFormattedText(content: String, isDarkMo
                             parseFormattedText(formattedText, isDarkMode)
                         }
                     }
+                    "LINK" -> {
+                        pushStringAnnotation(tag = "URL", annotation = formattedUrl ?: formattedText)
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xFF1976D2),
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ) {
+                            parseFormattedText(formattedText, isDarkMode)
+                        }
+                        pop()
+                    }
                 }
             } else {
                 // Simple formatted text without nesting
@@ -591,6 +601,19 @@ private fun AnnotatedString.Builder.parseFormattedText(content: String, isDarkMo
                             append(formattedText)
                         }
                     }
+                    "LINK" -> {
+                        val url = formattedUrl ?: formattedText
+                        pushStringAnnotation(tag = "URL", annotation = url)
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xFF1976D2),
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ) {
+                            append(formattedText)
+                        }
+                        pop()
+                    }
                 }
             }
             
@@ -621,6 +644,7 @@ private fun AnnotatedString.Builder.parseFormattedText(content: String, isDarkMo
 private fun parseInlineFormatting(text: String): String {
     // Process inline formatting markers with proper nesting support
     var processedText = text
+    processedText = processedText.replace("&lt;", "<").replace("&gt;", ">")
     
     // Handle `inline code` first (highest priority, shouldn't contain other formatting)
     processedText = processedText.replace(Regex("`([^`]+)`")) { match ->
@@ -642,6 +666,12 @@ private fun parseInlineFormatting(text: String): String {
     processedText = processedText.replace(Regex("~~(.+?)~~")) { match ->
         "【STRIKE:${match.groupValues[1]}】"
     }
+
+    // Fallback: bare URLs without brackets (ensure minimal capture)
+    processedText = processedText.replace(Regex("(?<![A-Za-z0-9_])(https?://[A-Za-z0-9._~:/?#\\[\\]@!$&'()*+,;=%-]+)")) { match ->
+        val url = match.groupValues[1]
+        "【LINK:${url}|${url}】"
+    }
     
     return processedText
 }
@@ -654,19 +684,22 @@ private fun TextBlock(block: ContentBlock.Text, isDarkMode: Boolean) {
         MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f)
     }
     
-    Text(
-        text = buildAnnotatedString {
-            parseFormattedText(block.content, isDarkMode)
-        },
-        style = MaterialTheme.typography.bodyLarge.copy(
-            lineHeight = 24.sp,
-            letterSpacing = 0.5.sp
-        ),
-        color = textColor,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(vertical = 6.dp)
+    val context = LocalContext.current
+    val annotated = remember(block.content, isDarkMode) {
+        buildAnnotatedString { parseFormattedText(block.content, isDarkMode) }
+    }
+    androidx.compose.foundation.text.ClickableText(
+        text = annotated,
+        style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 24.sp, letterSpacing = 0.5.sp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(vertical = 6.dp),
+        onClick = { offset ->
+            annotated.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let { ann ->
+                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText("Link", ann.item)
+                clipboard.setPrimaryClip(clip)
+                android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
     )
 }
 
@@ -748,11 +781,14 @@ private fun HeaderBlock(block: ContentBlock.Header, isDarkMode: Boolean) {
             fontWeight = FontWeight.Medium
         )
     }
-    
-    Text(
-        text = block.text,
-        style = textStyle,
-        color = headerColors,
+    val context = LocalContext.current
+    val annotated = remember(block.text) {
+        val formatted = parseInlineFormatting(block.text)
+        buildAnnotatedString { parseFormattedText(formatted, isDarkMode) }
+    }
+    androidx.compose.foundation.text.ClickableText(
+        text = annotated,
+        style = textStyle.copy(color = headerColors),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
@@ -762,7 +798,15 @@ private fun HeaderBlock(block: ContentBlock.Header, isDarkMode: Boolean) {
                     2 -> 10.dp
                     else -> 8.dp
                 }
-            )
+            ),
+        onClick = { offset ->
+            annotated.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let { ann ->
+                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText("Link", ann.item)
+                clipboard.setPrimaryClip(clip)
+                android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
+            }
+        }
     )
 }
 
@@ -780,7 +824,7 @@ private fun CodeBlock(block: ContentBlock.Code, isDarkMode: Boolean) {
                 val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText("Code", block.content)
                 clipboard.setPrimaryClip(clip)
-                showCopyToast = true
+                android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
             },
         color = if (isDarkMode) Color(0xFF2D2D2D) else Color(0xFFF5F5F5),
         shape = MaterialTheme.shapes.small
@@ -806,91 +850,68 @@ private fun CodeBlock(block: ContentBlock.Code, isDarkMode: Boolean) {
 
 @Composable
 private fun TableBlock(block: ContentBlock.Table, isDarkMode: Boolean) {
-    val headerBackground = if (isDarkMode) {
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-    } else {
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
-    }
-    
-    val cellBackground = if (isDarkMode) {
-        MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
-    } else {
-        MaterialTheme.colorScheme.surface
-    }
-    
-    val textColor = if (isDarkMode) {
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f)
-    } else {
-        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f)
-    }
-    
+    val headerBackground = if (isDarkMode) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f)
+    val rowAltBackground = if (isDarkMode) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.08f) else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.06f)
+    val textColor = if (isDarkMode) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f) else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f)
+    val context = LocalContext.current
+
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = cellBackground)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            // Header row
+        Column(modifier = Modifier.fillMaxWidth()) {
             if (block.headers.isNotEmpty()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(headerBackground)
-                ) {
+                Row(modifier = Modifier.fillMaxWidth().background(headerBackground)) {
                     block.headers.forEach { header ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(12.dp),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            Text(
-                                text = header,
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    fontWeight = FontWeight.Bold
-                                ),
-                                color = textColor
+                        Box(modifier = Modifier.weight(1f).padding(12.dp), contentAlignment = Alignment.CenterStart) {
+                            val ann = remember(header, isDarkMode) {
+                                val formatted = parseInlineFormatting(header)
+                                buildAnnotatedString { parseFormattedText(formatted, isDarkMode) }
+                            }
+                            androidx.compose.foundation.text.ClickableText(
+                                text = ann,
+                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold, color = textColor),
+                                onClick = { offset ->
+                                    ann.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let { a ->
+                                        val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                        val clip = android.content.ClipData.newPlainText("Link", a.item)
+                                        clipboard.setPrimaryClip(clip)
+                                        android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             )
                         }
                     }
                 }
             }
-            
-            // Data rows
-            block.rows.forEach { row ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 1.dp)
-                ) {
+
+            block.rows.forEachIndexed { index, row ->
+                val rowBg = if (index % 2 == 0) rowAltBackground else Color.Transparent
+                Row(modifier = Modifier.fillMaxWidth().background(rowBg).padding(vertical = 1.dp)) {
                     row.forEach { cell ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(12.dp),
-                            contentAlignment = Alignment.CenterStart
-                        ) {
-                            Text(
-                                text = cell,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = textColor.copy(alpha = 0.8f)
+                        Box(modifier = Modifier.weight(1f).padding(12.dp), contentAlignment = Alignment.CenterStart) {
+                            val ann = remember(cell, isDarkMode) {
+                                val formatted = parseInlineFormatting(cell)
+                                buildAnnotatedString { parseFormattedText(formatted, isDarkMode) }
+                            }
+                            androidx.compose.foundation.text.ClickableText(
+                                text = ann,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = textColor.copy(alpha = 0.85f)),
+                                onClick = { offset ->
+                                    ann.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let { a ->
+                                        val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                                        val clip = android.content.ClipData.newPlainText("Link", a.item)
+                                        clipboard.setPrimaryClip(clip)
+                                        android.widget.Toast.makeText(context, "复制成功", android.widget.Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                             )
                         }
                     }
                 }
-                
-                // Add divider between rows (except for last row)
-                if (row != block.rows.last()) {
-                    HorizontalDivider(
-                        modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                        thickness = 0.5.dp
-                    )
+                if (index != block.rows.lastIndex) {
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.08f), thickness = 0.5.dp)
                 }
             }
         }

@@ -16,6 +16,7 @@ import com.blog.myandroidblog.data.remote.ApiService
 import com.blog.myandroidblog.data.remote.AuthStore
 import com.blog.myandroidblog.data.models.Post
 import com.blog.myandroidblog.data.models.Tag
+import com.blog.myandroidblog.data.models.VersionInfo
 import com.blog.myandroidblog.ui.components.LoadingView
 import com.blog.myandroidblog.ui.components.ErrorView
 import com.blog.myandroidblog.ui.components.EmptyView
@@ -69,7 +70,8 @@ fun PostListScreen(
                     } else {
                         posts = response.data
                     }
-                    hasNextPage = response.pagination.hasNext
+                    val p = response.pagination
+                    hasNextPage = p?.hasNext ?: ((p?.totalPages ?: p?.pages ?: 1) > (p?.page ?: page))
                 } else {
                     val response = ApiService.getPostsByTag(tagId = selectedTagId!!, page = page)
                     if (isLoadMore && page > 1) {
@@ -77,7 +79,8 @@ fun PostListScreen(
                     } else {
                         posts = response.data
                     }
-                    hasNextPage = response.pagination.hasNext
+                    val p = response.pagination
+                    hasNextPage = p?.hasNext ?: ((p?.totalPages ?: p?.pages ?: 1) > (p?.page ?: page))
                 }
                 currentPage = page
             } catch (e: Exception) {
@@ -141,6 +144,7 @@ fun PostListScreen(
                     } else {
                         TextButton(onClick = onLogin) { Text("登录") }
                     }
+                    
                 }
             )
         }
@@ -255,6 +259,8 @@ fun PostListScreen(
             }
         }
     }
+
+    
 }
 
 private fun stripMarkdown(text: String): String {
@@ -352,6 +358,75 @@ fun PostCard(
             }
         }
     }
+}
+
+private fun downloadAndInstall(ctx: android.content.Context, info: VersionInfo) {
+    val fileName = "szhBlog-${info.version_name}.apk"
+    val request = android.app.DownloadManager.Request(android.net.Uri.parse(info.apk_url)).apply {
+        setTitle("下载新版本")
+        setDescription("正在下载 $fileName")
+        setNotificationVisibility(android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, fileName)
+        setMimeType("application/vnd.android.package-archive")
+    }
+    val dm = ctx.getSystemService(android.app.DownloadManager::class.java)
+    val id = dm.enqueue(request)
+    val receiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context, intent: android.content.Intent) {
+            val completeId = intent.getLongExtra(android.app.DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if (completeId == id) {
+                val file = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS)
+                val apk = java.io.File(file, fileName)
+                val uri = androidx.core.content.FileProvider.getUriForFile(ctx, ctx.packageName + ".fileprovider", apk)
+                val install = android.content.Intent(android.content.Intent.ACTION_VIEW).apply {
+                    setDataAndType(uri, "application/vnd.android.package-archive")
+                    addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION or android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                ctx.startActivity(install)
+            }
+        }
+    }
+    ctx.registerReceiver(receiver, android.content.IntentFilter(android.app.DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+}
+
+private fun getCurrentVersionCode(ctx: android.content.Context): Int {
+    return try {
+        val pm = ctx.packageManager
+        val pkg = ctx.packageName
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            pm.getPackageInfo(pkg, android.content.pm.PackageManager.PackageInfoFlags.of(0)).longVersionCode.toInt()
+        } else {
+            @Suppress("DEPRECATION")
+            pm.getPackageInfo(pkg, 0).longVersionCode.toInt()
+        }
+    } catch (_: Exception) {
+        1
+    }
+}
+
+private fun getCurrentVersionName(ctx: android.content.Context): String {
+    return try {
+        val pm = ctx.packageManager
+        val pkg = ctx.packageName
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            pm.getPackageInfo(pkg, android.content.pm.PackageManager.PackageInfoFlags.of(0)).versionName ?: ""
+        } else {
+            @Suppress("DEPRECATION")
+            pm.getPackageInfo(pkg, 0).versionName ?: ""
+        }
+    } catch (_: Exception) {
+        ""
+    }
+}
+
+private fun parseVersionCodeFromName(name: String): Int {
+    return try {
+        val parts = name.trim().removePrefix("v").split('.')
+        val major = parts.getOrNull(0)?.toIntOrNull() ?: 0
+        val minor = parts.getOrNull(1)?.toIntOrNull() ?: 0
+        val patch = parts.getOrNull(2)?.toIntOrNull() ?: 0
+        major * 10000 + minor * 100 + patch
+    } catch (_: Exception) { 0 }
 }
 
 @Composable

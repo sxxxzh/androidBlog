@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+import java.util.Properties
+
 android {
     namespace = "com.blog.myandroidblog"
     compileSdk {
@@ -15,8 +17,8 @@ android {
         applicationId = "com.blog.myandroidblog"
         minSdk = 33
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 10104
+        versionName = "1.1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +43,36 @@ android {
         compose = true
     }
 }
+
+// Custom signing config via keystore.properties (optional)
+val keystorePropsFile = rootProject.file("keystore.properties")
+if (keystorePropsFile.exists()) {
+    val keystoreProperties = Properties().apply {
+        keystorePropsFile.inputStream().use { load(it) }
+    }
+    val storeFilePath = keystoreProperties.getProperty("storeFile")
+    val hasKeystore = !storeFilePath.isNullOrBlank() && file(storeFilePath).exists()
+    if (hasKeystore) {
+        android {
+            signingConfigs {
+                create("release") {
+                    storeFile = file(storeFilePath!!)
+                    storePassword = keystoreProperties.getProperty("storePassword")
+                    keyAlias = keystoreProperties.getProperty("keyAlias")
+                    keyPassword = keystoreProperties.getProperty("keyPassword")
+                }
+            }
+            buildTypes {
+                getByName("release") {
+                    signingConfig = signingConfigs.getByName("release")
+                }
+            }
+        }
+    }
+}
+
+// Output APK name customization can be added via androidComponents or variant outputs.
+// Skipping here to keep build stable; we can provide a dedicated Gradle task to rename after build.
 
 dependencies {
     implementation(libs.androidx.core.ktx)

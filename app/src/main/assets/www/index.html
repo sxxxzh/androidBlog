@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>墨聊 - 像素水墨风聊天</title>
+    <style>
+        :root { --ink-black: #1a1a1a; --paper-white: #f8f6f0; --light-ink: #6b6b6b; --ink-gray: #4a4a4a; --accent-red: #c53030; --accent-blue: #2d5a5a; --accent-gold: #d4a574; --online-green: #27ae60; --offline-gray: #95a5a6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: var(--paper-white); color: var(--ink-black); height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; }
+        .ink-wash-bg { background: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(0,0,0,0.02) 0%, transparent 50%), linear-gradient(135deg, var(--paper-white) 0%, #f5f3ed 100%); position: relative; }
+        .ink-wash-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='ink'%3E%3CfeTurbulence baseFrequency='0.02' numOctaves='3' /%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23ink)' opacity='0.1' /%3E%3C/svg%3E"); pointer-events: none; z-index: -1; }
+        .header { position: fixed; top: 0; left: 0; right: 0; height: 64px; background: var(--paper-white); border-bottom: 3px solid var(--ink-black); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 1000; box-shadow: 0 4px 0 rgba(0,0,0,0.1); }
+        .header-title { font-size: 20px; font-weight: 600; color: var(--ink-black); letter-spacing: 2px; }
+        .header-actions { display: flex; gap: 12px; }
+        .pixel-btn { background: var(--ink-gray); color: var(--paper-white); border: 2px solid var(--ink-black); padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 0 2px 0 rgba(0,0,0,0.2), 0 4px 0 rgba(0,0,0,0.1); }
+        .pixel-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 2px 0 rgba(0,0,0,0.1); }
+        .pixel-btn.primary { background: var(--accent-red); }
+        .main-content { margin-top: 64px; height: calc(100vh - 64px); overflow-y: auto; padding-bottom: 20px; }
+        .pinned-room { background: rgba(248, 246, 240, 0.95); border: 3px solid var(--accent-blue); margin: 16px; padding: 16px; position: relative; box-shadow: 4px 4px 0 rgba(0,0,0,0.1), 8px 8px 0 rgba(0,0,0,0.05); }
+        .pinned-room::before { content: '置顶'; position: absolute; top: -12px; left: 12px; background: var(--accent-blue); color: var(--paper-white); padding: 2px 8px; font-size: 12px; font-weight: 600; }
+        .room-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .room-title { font-size: 18px; font-weight: 600; color: var(--accent-blue); }
+        .room-stats { display: flex; gap: 8px; font-size: 12px; color: var(--light-ink); }
+        .room-preview { font-size: 14px; color: var(--ink-gray); line-height: 1.4; margin-bottom: 8px; }
+        .room-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--light-ink); }
+        .users-section { margin: 16px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .section-title { font-size: 16px; font-weight: 600; color: var(--ink-black); }
+        .section-action { font-size: 14px; color: var(--accent-blue); cursor: pointer; }
+        .user-list { display: flex; flex-direction: column; gap: 8px; }
+        .user-card { background: rgba(248, 246, 240, 0.9); border: 2px solid var(--ink-black); padding: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 2px 2px 0 rgba(0,0,0,0.1), 4px 4px 0 rgba(0,0,0,0.05); }
+        .user-card:active { transform: translateY(1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.1), 2px 2px 0 rgba(0,0,0,0.05); }
+        .user-card.new-message { border-color: var(--accent-red); background: rgba(197, 48, 48, 0.05); }
+        .user-avatar { width: 48px; height: 48px; background: var(--ink-gray); border: 2px solid var(--ink-black); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 600; color: var(--paper-white); position: relative; flex-shrink: 0; }
+        .online-indicator { position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--paper-white); background: var(--online-green); }
+        .online-indicator.offline { background: var(--offline-gray); }
+        .user-info { flex: 1; min-width: 0; }
+        .user-name { font-size: 16px; font-weight: 500; color: var(--ink-black); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-message { font-size: 14px; color: var(--light-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
+        .user-time { font-size: 12px; color: var(--light-ink); white-space: nowrap; }
+        .unread-badge { background: var(--accent-red); color: var(--paper-white); font-size: 12px; font-weight: 600; padding: 2px 6px; border-radius: 0; border: 1px solid var(--ink-black); min-width: 20px; text-align: center; box-shadow: 1px 1px 0 rgba(0,0,0,0.2); }
+        @keyframes inkSpread { 0% { transform: scale(0.9); opacity: 0; filter: blur(2px); } 50% { opacity: 0.7; filter: blur(1px); } 100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+        .ink-appear { animation: inkSpread 0.4s ease-out; }
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .slide-in { animation: slideIn 0.3s ease-out; }
+        .ink-decoration { position: absolute; width: 60px; height: 60px; background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%); border-radius: 50%; opacity: 0.3; pointer-events: none; }
+        .ink-decoration.top-left { top: 20px; left: 20px; }
+        .ink-decoration.bottom-right { bottom: 20px; right: 20px; }
+        .loading { text-align: center; padding: 20px; color: var(--light-ink); font-size: 14px; }
+        .loading::after { content: ''; display: inline-block; width: 20px; height: 20px; border: 2px solid var(--light-ink); border-top: 2px solid var(--accent-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-left: 8px; vertical-align: middle; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--light-ink); }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+        .empty-text { font-size: 16px; margin-bottom: 8px; }
+        .empty-subtext { font-size: 14px; opacity: 0.7; }
+        .touch-feedback { position: relative; overflow: hidden; }
+        .touch-feedback::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(0,0,0,0.1); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; }
+        .touch-feedback:active::after { width: 100px; height: 100px; }
+        @media (max-width: 375px) { .header { height: 56px; padding: 0 12px; } .main-content { margin-top: 56px; height: calc(100vh - 56px - 72px); } .user-card { padding: 10px; } .user-avatar { width: 44px; height: 44px; } }
+        .main-content::-webkit-scrollbar { display: none; }
+        .main-content { -ms-overflow-style: none; scrollbar-width: none; }
+        .user-list { opacity: 0; transition: opacity 0.3s ease; }
+        .user-list.loaded { opacity: 1; }
+        .main-content { min-height: 100vh; background: var(--paper-white); }
+        @media (prefers-reduced-motion: reduce) { .ink-appear, .slide-in, .loading::after { animation: none; } .touch-feedback::after { transition: none; } }
+    </style>
+    <script>
+        function __tryParseJson(d){ try{ return JSON.parse(d);}catch(_){ return {}; } }
+    </script>
+</head>
+<body class="ink-wash-bg" style="visibility: hidden; opacity: 0;">
+<div class="ink-decoration top-left"></div>
+<div class="ink-decoration bottom-right"></div>
+<header class="header">
+    <h1 class="header-title">墨聊</h1>
+    <div class="header-actions">
+        <button class="pixel-btn" type="button" aria-label="搜索" onclick="showSearch()">🔍</button>
+        <button class="pixel-btn primary" type="button" aria-label="新建聊天" onclick="showNewChat()">✍️</button>
+    </div>
+</header>
+<main class="main-content" id="mainContent">
+    <div class="pinned-room ink-appear">
+        <div class="room-header">
+            <h2 class="room-title">🌸 墨香茶室</h2>
+            <div class="room-stats">
+                <span>👥 128人</span>
+                <span>💬 2.3k消息</span>
+            </div>
+        </div>
+        <div class="room-preview" id="publicRoomPreview">欢迎来到墨聊，品茶论道，畅所欲言...</div>
+        <div class="room-meta">
+            <span class="last-time">刚刚</span>
+            <button class="pixel-btn primary" type="button" onclick="enterPublicRoom()" style="padding: 4px 12px; font-size: 12px;">进入茶室</button>
+        </div>
+    </div>
+    <div class="users-section">
+        <div class="section-header">
+            <h3 class="section-title">💬 最近联系</h3>
+            <span class="section-action" onclick="refreshUsers()">🔄 刷新</span>
+        </div>
+        <div class="user-list" id="userList"></div>
+    </div>
+    <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon">🎋</div>
+        <div class="empty-text">暂无联系人</div>
+        <div class="empty-subtext">进入茶室开始聊天吧</div>
+    </div>
+</main>
+<script>
+    let __urlToken = new URLSearchParams(window.location.search).get('token');
+    if (!__urlToken) { const raw = decodeURIComponent(window.location.search || ''); const m = raw.match(/[?&]token\s*=\s*([^&]+)/i); if (m && m[1]) { __urlToken = m[1].trim(); } }
+    if (__urlToken && __urlToken.trim() !== '') { const cleaned = __urlToken.trim(); try { localStorage.setItem('chat_token', cleaned); localStorage.removeItem('jwttoken'); } catch (_) {} }
+    const CHAT_CONFIG = { baseUrl: 'https://newchat.szhaovo.cn', wsUrl: 'wss://newchat.szhaovo.cn/ws', token: localStorage.getItem('chat_token') || '', currentUser: null, onlineUsers: new Map(), conversations: new Map(), unreadCounts: new Map(), ws: null };
+    const Api = { async json(response) { try { return await response.json(); } catch (_) { return { success: false }; } }, headers(extra) { const h = { 'Content-Type': 'application/json' }; if (CHAT_CONFIG.token) h['Authorization'] = `Bearer ${CHAT_CONFIG.token}`; return Object.assign(h, extra || {}); }, get(path) { return fetch(`${CHAT_CONFIG.baseUrl}${path}`, { headers: this.headers() }); }, post(path, body) { return fetch(`${CHAT_CONFIG.baseUrl}${path}`, { method: 'POST', headers: this.headers(), cache: 'no-store', body: JSON.stringify(body || {}) }); } };
+    const StorageManager = { saveConversations(conversations) { try { const data = Array.from(conversations.values()).map(conv => ({ id: conv.id, name: conv.name, lastMessage: conv.lastMessage, lastTime: conv.lastTime, timestamp: conv.timestamp, isOnline: conv.isOnline, unreadCount: conv.unreadCount, hasNewMessage: conv.hasNewMessage })); const save = () => localStorage.setItem('chat_conversations', JSON.stringify(data)); if ('requestIdleCallback' in window) { requestIdleCallback(save); } else { setTimeout(save, 0); } } catch (_) {} }, loadConversations() { try { const data = localStorage.getItem('chat_conversations'); if (data) { const arr = JSON.parse(data); const m = new Map(); arr.forEach(conv => m.set(conv.id, conv)); return m; } } catch (_) {} return new Map(); }, saveUserData(userData) { try { localStorage.setItem('chat_user_data', JSON.stringify(userData)); } catch (_) {} }, loadUserData() { try { const d = localStorage.getItem('chat_user_data'); return d ? JSON.parse(d) : null; } catch (_) { return null; } }, clearAll() { try { localStorage.removeItem('chat_conversations'); localStorage.removeItem('chat_user_data'); } catch (_) {} } };
+    const WS_CONN = { connecting: false, reconnectTimer: null, heartbeatTimer: null, backoff: 2000 };
+    const VIEW_STATE = { chatOpen:false, currentTargetId:null, currentChannel:'public' };
+    document.addEventListener('DOMContentLoaded', function() { initializeApp(); });
+    function renderInitialUI(){ const userList = document.getElementById('userList'); const emptyState = document.getElementById('emptyState'); if(userList){ userList.style.display='flex'; userList.innerHTML=''; } if(emptyState){ emptyState.style.display='none'; } document.body.style.visibility = 'visible'; document.body.style.opacity = '1'; setupScrollListener(); }
+    async function initializeApp() { try { renderInitialUI(); const cachedConversations = StorageManager.loadConversations(); const cachedUserData = StorageManager.loadUserData(); if (cachedConversations.size > 0) { CHAT_CONFIG.conversations = cachedConversations; renderConversations(Array.from(cachedConversations.values())); } if (cachedUserData) { CHAT_CONFIG.currentUser = cachedUserData; }
+        if (!CHAT_CONFIG.token || CHAT_CONFIG.token.trim() === '') { showToast('令牌缺失，请先登录，若已登录请刷新页面'); loadOfflineData(); return; }
+        const userData = await verifyToken(CHAT_CONFIG.token); if (userData) { CHAT_CONFIG.currentUser = userData; localStorage.setItem('chat_token', CHAT_CONFIG.token); StorageManager.saveUserData(userData); loadConversations(); loadPublicRoomInfo(); loadOnlineUsers(); connectWebSocket(false); } else { showToast('令牌无效或已过期，请重新登录或者刷新'); loadOfflineData(); } } catch (_) { showToast('服务异常，使用离线模式'); loadOfflineData(); } }
+    async function verifyToken(token) { try { const r = await Api.post('/api/auth/verify', { token }); const result = await Api.json(r); return result && result.success ? result.data : null; } catch (_) { return null; } }
+    async function loadConversations() { try { const [pr, pu] = await Promise.all([ Api.get('/api/messages/last-private?limit=50&offset=0'), Api.get('/api/messages/history?channel=public&limit=50') ]); const privateResult = await Api.json(pr); const publicResult = await Api.json(pu); let conversations = []; if (privateResult.success && privateResult.data && privateResult.data.length > 0) { conversations = processPrivateMessages(privateResult.data); } if (publicResult.success && publicResult.data && publicResult.data.length > 0) { const publicConversations = extractConversationsFromMessages(publicResult.data); const map = new Map(); conversations.forEach(conv => map.set(conv.id, conv)); publicConversations.forEach(conv => { if (!map.has(conv.id)) map.set(conv.id, conv); }); conversations = Array.from(map.values()); } conversations.forEach(conv => { if (!conv.lastMessage || conv.lastMessage.trim() === '') conv.lastMessage = '暂无消息'; if (!conv.lastTime || conv.lastTime.trim() === '') conv.lastTime = '刚刚'; if (!conv.timestamp) conv.timestamp = Date.now(); }); conversations.forEach(conv => { CHAT_CONFIG.conversations.set(conv.id, conv); }); renderConversations(conversations); } catch (_) { await loadConversationsFallback(); } }
+    function processPrivateMessages(messages) { const currentUserId = CHAT_CONFIG.currentUser?.id; const currentUserName = CHAT_CONFIG.currentUser?.name; const list = []; messages.forEach(message => { const idCandidates = [ message.other_user_id, message.target_user_id, message.sender_id, message.receiver_id ]; let otherUserId = null; for (let i = 0; i < idCandidates.length; i++) { const cid = idCandidates[i]; if (cid && cid !== currentUserId) { otherUserId = cid; break; } } if (!otherUserId) return; const nameCandidates = [ message.other_user_name, message.target_user_name, message.sender_name, message.receiver_name ]; let otherUserName = null; for (let i = 0; i < nameCandidates.length; i++) { const nm = nameCandidates[i]; if (nm && nm !== currentUserName) { otherUserName = nm; break; } } const content = getMessagePreviewText(message) || '暂无消息'; const ts = message.timestamp || message.created_at || Date.now(); list.push({ id: otherUserId, name: otherUserName || '未知用户', lastMessage: content, lastTime: formatTime(ts), timestamp: new Date(ts).getTime(), isOnline: CHAT_CONFIG.onlineUsers.has(otherUserId), unreadCount: 0, hasNewMessage: false }); }); const map = new Map(); list.forEach(conv => { const ex = map.get(conv.id); if (!ex || conv.timestamp > ex.timestamp) map.set(conv.id, conv); }); return Array.from(map.values()).sort((a, b) => b.timestamp - a.timestamp); }
+    async function loadConversationsFallback() { try { const r = await Api.get('/api/messages/history?channel=public&limit=50'); const result = await Api.json(r); if (result.success && result.data) { const conversations = extractConversationsFromMessages(result.data); conversations.forEach(conv => { if (!conv.lastMessage || conv.lastMessage.trim() === '') { conv.lastMessage = '暂无消息'; conv.lastTime = '刚刚'; conv.timestamp = Date.now(); } }); conversations.forEach(conv => { CHAT_CONFIG.conversations.set(conv.id, conv); }); renderConversations(conversations); } else { renderConversations([]); } } catch (_) { renderConversations([]); } }
+    function extractConversationsFromMessages(messages) { const conversations = new Map(); const currentUserId = CHAT_CONFIG.currentUser?.id; messages.forEach(message => { const senderId = message.sender_id || message.senderId; const senderName = message.sender_name || message.senderName; const content = getMessagePreviewText(message) || ''; const timestamp = message.timestamp || message.created_at; if (senderId && senderId !== currentUserId) { const existing = conversations.get(senderId) || { id: senderId, name: senderName || '未知用户', lastMessage: content || '暂无消息', lastTime: formatTime(timestamp) || '刚刚', timestamp: timestamp ? new Date(timestamp).getTime() : Date.now(), isOnline: false, unreadCount: 0, hasNewMessage: false }; if (content && content.trim() !== '') existing.lastMessage = content; if (timestamp) { existing.lastTime = formatTime(timestamp); existing.timestamp = new Date(timestamp).getTime(); } conversations.set(senderId, existing); } }); return Array.from(conversations.values()).sort((a, b) => b.timestamp - a.timestamp); }
+    async function loadPublicRoomInfo() { try { const s = await fetch(`${CHAT_CONFIG.baseUrl}/api/system/stats`); const statsResult = await Api.json(s); if (statsResult.success && statsResult.data) updatePublicRoomStats(statsResult.data); const r = await Api.get('/api/messages/history?channel=public&limit=1'); const result = await Api.json(r); if (result.success && result.data && result.data.length > 0) updatePublicRoomPreview(result.data[0]); } catch (_) {} }
+    async function loadOnlineUsers() { try { const r = await Api.get('/api/users/online'); const result = await Api.json(r); if (result.success && result.data) { result.data.forEach(user => { CHAT_CONFIG.onlineUsers.set(user.id, user); }); updateUsersOnlineStatus(); } } catch (_) {} }
+    function getWS(){ return CHAT_CONFIG.ws; }
+    function startHeartbeat(){ if(WS_CONN.heartbeatTimer) clearInterval(WS_CONN.heartbeatTimer); WS_CONN.heartbeatTimer = setInterval(function(){ const ws=getWS(); if(ws && ws.readyState===WebSocket.OPEN){ try{ ws.send(JSON.stringify({type:'ping'})); }catch(_){ } } }, 25000); }
+    function stopHeartbeat(){ if(WS_CONN.heartbeatTimer){ clearInterval(WS_CONN.heartbeatTimer); WS_CONN.heartbeatTimer=null; } }
+    function scheduleReconnect(){ const ws=getWS(); if(ws && ws.readyState===WebSocket.OPEN) return; if(WS_CONN.connecting) return; if(WS_CONN.reconnectTimer) clearTimeout(WS_CONN.reconnectTimer); WS_CONN.reconnectTimer = setTimeout(function(){ connectWebSocket(true); WS_CONN.backoff = Math.min(WS_CONN.backoff*2, 15000); }, WS_CONN.backoff); }
+    function connectWebSocket(force){ try{ if(!CHAT_CONFIG.token) return; const existing=getWS(); if(!force && existing && (existing.readyState===WebSocket.OPEN || existing.readyState===WebSocket.CONNECTING)) return; if(existing && existing.readyState!==WebSocket.CLOSED){ try{ existing.close(); }catch(_){ } }
+        const wsUrl = new URL(CHAT_CONFIG.wsUrl); wsUrl.searchParams.set('token', CHAT_CONFIG.token); const ws = new WebSocket(wsUrl.toString()); CHAT_CONFIG.ws = ws; WS_CONN.connecting = true; if(WS_CONN.reconnectTimer) { clearTimeout(WS_CONN.reconnectTimer); WS_CONN.reconnectTimer=null; WS_CONN.backoff=2000; }
+        ws.onopen = function(){ WS_CONN.connecting=false; startHeartbeat(); showToast('已连接到聊天服务器'); const f=document.getElementById('chatFrame'); if(f && f.style.display!=='none'){ try{ f.contentWindow.postMessage({ type:'ws:status', data:{ text:'已连接', connected:true } }, '*'); }catch(_){ } } };
+        ws.onmessage = function(event){ const message = __tryParseJson(event.data); if(message && message.type){ handleWebSocketMessage(message); const f=document.getElementById('chatFrame'); if(f && f.style.display!=='none'){ try{ f.contentWindow.postMessage({ type:'ws', data:message }, '*'); }catch(_){ } } } };
+        ws.onclose = function(){ WS_CONN.connecting=false; stopHeartbeat(); const f=document.getElementById('chatFrame'); if(f && f.style.display!=='none'){ try{ f.contentWindow.postMessage({ type:'ws:status', data:{ text:'已断开', connected:false } }, '*'); }catch(_){ } } scheduleReconnect(); };
+        ws.onerror = function(){ WS_CONN.connecting=false; };
+    } catch (_){ }
+    }
+    function handleWebSocketMessage(message) { const { type, data } = message; if (type === 'welcome') handleWelcome(data); else if (type === 'message:new') handleNewMessage(data); else if (type === 'user:online') handleUserOnline(data); else if (type === 'user:offline') handleUserOffline(data); }
+    function handleWelcome(data) { if (data && data.onlineUsers) { data.onlineUsers.forEach(user => { CHAT_CONFIG.onlineUsers.set(user.id, user); }); if (CHAT_CONFIG.conversations.size > 0) updateUsersOnlineStatus(); } }
+    function handleNewMessage(message) { const senderId = message.sender_id || message.senderId; const content = message.content || message.text || ''; const timestamp = message.timestamp || message.created_at; let senderName = message.sender_name || message.senderName || '未知用户'; if (message.other_user_name && message.channel === 'private') senderName = message.other_user_name; if (senderId && senderId !== CHAT_CONFIG.currentUser?.id) { const conversation = CHAT_CONFIG.conversations.get(senderId) || { id: senderId, name: senderName, lastMessage: content, lastTime: formatTime(timestamp), timestamp: new Date(timestamp).getTime(), isOnline: CHAT_CONFIG.onlineUsers.has(senderId), unreadCount: 0, hasNewMessage: true }; conversation.lastMessage = content; conversation.lastTime = formatTime(timestamp); conversation.timestamp = new Date(timestamp).getTime(); conversation.name = senderName; const isCurrentOpen = VIEW_STATE.chatOpen && VIEW_STATE.currentChannel==='private' && VIEW_STATE.currentTargetId===senderId; if (isCurrentOpen) { conversation.unreadCount = 0; conversation.hasNewMessage = false; } else { conversation.unreadCount = (conversation.unreadCount || 0) + 1; conversation.hasNewMessage = true; } CHAT_CONFIG.conversations.set(senderId, conversation); if (CHAT_CONFIG.conversations.size > 0) { renderConversations(Array.from(CHAT_CONFIG.conversations.values())); if (!isCurrentOpen) showToast(`新消息来自 ${conversation.name}`); } } }
+    function handleUserOnline(user) { CHAT_CONFIG.onlineUsers.set(user.id, user); if (CHAT_CONFIG.conversations.size > 0) updateUsersOnlineStatus(); showToast(`${user.name} 已上线`); }
+    function handleUserOffline(user) { CHAT_CONFIG.onlineUsers.delete(user.userId || user.id); if (CHAT_CONFIG.conversations.size > 0) updateUsersOnlineStatus(); showToast(`${user.name} 已离线`); }
+    function updateUsersOnlineStatus() { if (CHAT_CONFIG.conversations.size === 0) return; const conversations = Array.from(CHAT_CONFIG.conversations.values()); conversations.forEach(conv => { conv.isOnline = CHAT_CONFIG.onlineUsers.has(conv.id); }); renderConversations(conversations); }
+    function renderConversations(conversations) {
+        const userList = document.getElementById('userList');
+        const emptyState = document.getElementById('emptyState');
+        if (conversations.length === 0) { userList.style.display = 'none'; emptyState.style.display = 'block'; return; }
+        userList.style.display = 'flex';
+        emptyState.style.display = 'none';
+        conversations.sort((a, b) => b.timestamp - a.timestamp);
+        const fragment = document.createDocumentFragment();
+        conversations.forEach(user => {
+            const userCard = document.createElement('div');
+            userCard.className = `user-card touch-feedback ${user.hasNewMessage ? 'new-message' : ''}`;
+            userCard.onclick = () => openChat(user.id, user.name);
+            const initial = (user.avatar || (user.name ? user.name.charAt(0) : '?'));
+            userCard.innerHTML = `
+                <div class="user-avatar">
+                    ${initial}
+                    <div class="online-indicator ${user.isOnline ? '' : 'offline'}"></div>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">${user.name || '未知用户'}</div>
+                    <div class="user-message">${user.lastMessage || '暂无消息'}</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="user-time">${user.lastTime || '刚刚'}</div>
+                    ${user.unreadCount > 0 ? `<div class="unread-badge">${user.unreadCount}</div>` : ''}
+                </div>
+            `;
+            fragment.appendChild(userCard);
+        });
+        userList.innerHTML = '';
+        userList.appendChild(fragment);
+        userList.classList.add('loaded');
+        const m = new Map();
+        conversations.forEach(conv => { m.set(conv.id, conv); });
+        StorageManager.saveConversations(m);
+    }
+    function updatePublicRoomPreview(lastMessage) { const preview = document.getElementById('publicRoomPreview'); const senderName = lastMessage.sender_name || lastMessage.senderName || '未知用户'; const content = getMessagePreviewText(lastMessage) || ''; const timestamp = lastMessage.timestamp || lastMessage.created_at; const lastTimeElement = document.querySelector('.last-time'); if (lastTimeElement && timestamp) lastTimeElement.textContent = formatTime(timestamp); preview.textContent = `${senderName}: ${content}`; }
+    function updatePublicRoomStats(stats) { const roomStats = document.querySelector('.room-stats'); if (roomStats && stats) { const users = stats.total_users || 0; const msgs = stats.total_messages || 0; roomStats.innerHTML = `<span>👥 ${users}人</span><span>💬 ${msgs}消息</span>`; } }
+    function formatTime(timestamp) { if (!timestamp) return '刚刚'; let date = new Date(timestamp); if (isNaN(date.getTime())) return '刚刚'; const now = new Date(); const diff = now - date; if (diff < 60000) return '刚刚'; if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`; if (diff < 86400000) return `${Math.floor(diff / 3600000)}小时前`; return date.toLocaleDateString('zh-CN'); }
+    function isImageMessage(m){ const t=(m.message_type||m.messageType||'').toLowerCase(); if(t==='image') return true; const url=(m.content||m.text||'').toLowerCase(); if(!url) return false; const exts=['.jpg','.jpeg','.png','.gif','.bmp','.webp','.svg']; return exts.some(e=>url.includes(e)) || url.includes('/api/files/'); }
+    function getMessagePreviewText(m){ if(isImageMessage(m)) return '图片'; return m.content || m.text || ''; }
+    function loadOfflineData() { const userList = document.getElementById('userList'); const emptyState = document.getElementById('emptyState'); if (userList) userList.style.display = 'none'; if (emptyState) emptyState.style.display = 'block'; CHAT_CONFIG.conversations.clear(); }
+    function openChat(userId, userName) { showToast(`正在打开与 ${userName} 的聊天...`); setTimeout(() => { showChatFrame({ type:'private', userId, userName }); }, 300); }
+    function enterPublicRoom() { showToast('正在进入墨香茶室...'); setTimeout(() => { showChatFrame({ type:'public' }); }, 300); }
+    function showChatFrame(opts){ let f=document.getElementById('chatFrame'); if(!f){ f=document.createElement('iframe'); f.id='chatFrame'; f.style.cssText='position:fixed; top:0; left:0; width:100%; height:100%; border:0; background:var(--paper-white); z-index:9999;'; document.body.appendChild(f); window.addEventListener('message', handleChildMessage); } const header=document.querySelector('.header'); if(header) header.style.display='none'; document.body.style.overflow='hidden'; document.getElementById('mainContent').style.display='none'; let src='chat.html?token='+encodeURIComponent(CHAT_CONFIG.token); if(opts && opts.type==='public'){ src+='&room=public'; VIEW_STATE.chatOpen=true; VIEW_STATE.currentChannel='public'; VIEW_STATE.currentTargetId=null; } else if(opts && opts.type==='private'){ src+='&user='+encodeURIComponent(opts.userId)+'&name='+encodeURIComponent(opts.userName); VIEW_STATE.chatOpen=true; VIEW_STATE.currentChannel='private'; VIEW_STATE.currentTargetId=opts.userId; markConversationRead(opts.userId); } f.src=src; f.style.display='block'; }
+    function closeChatFrame(){ const f=document.getElementById('chatFrame'); if(f){ f.style.display='none'; } document.getElementById('mainContent').style.display=''; const header=document.querySelector('.header'); if(header) header.style.display=''; document.body.style.overflow=''; VIEW_STATE.chatOpen=false; VIEW_STATE.currentTargetId=null; VIEW_STATE.currentChannel='public'; }
+    function handleChildMessage(e){ const m=e.data; if(!m || !m.type) return; const ws=getWS(); if(m.type==='child:send'){ if(ws && ws.readyState===WebSocket.OPEN){ ws.send(JSON.stringify({ type:'message:send', data:m.data })); } }
+        else if(m.type==='child:typing:start'){ if(ws && ws.readyState===WebSocket.OPEN){ ws.send(JSON.stringify({ type:'typing:start', data:{ channel:m.data.channel, targetUserId:m.data.targetUserId } })); } }
+        else if(m.type==='child:typing:stop'){ if(ws && ws.readyState===WebSocket.OPEN){ ws.send(JSON.stringify({ type:'typing:stop', data:{ channel:m.data.channel, targetUserId:m.data.targetUserId } })); } }
+        else if(m.type==='child:read'){ if(ws && ws.readyState===WebSocket.OPEN){ ws.send(JSON.stringify({ type:'message:read', data:{ messageId:m.data.messageId } })); } if(VIEW_STATE.chatOpen && VIEW_STATE.currentChannel==='private' && VIEW_STATE.currentTargetId){ markConversationRead(VIEW_STATE.currentTargetId); } }
+        else if(m.type==='child:close'){ closeChatFrame(); }
+        else if(m.type==='child:ready'){ const f=document.getElementById('chatFrame'); if(f){ try{ const connected=!!(ws && ws.readyState===WebSocket.OPEN); f.contentWindow.postMessage({ type:'ws:status', data:{ text: connected?'已连接':'连接中...', connected } }, '*'); const snapshot={ userData: CHAT_CONFIG.currentUser, onlineUsers: Array.from(CHAT_CONFIG.onlineUsers.values()) }; f.contentWindow.postMessage({ type:'ws', data:{ type:'welcome', data: snapshot } }, '*'); }catch(_){ } } }
+    }
+    function markConversationRead(userId){ const conv = CHAT_CONFIG.conversations.get(userId); if(!conv) return; conv.unreadCount = 0; conv.hasNewMessage = false; CHAT_CONFIG.conversations.set(userId, conv); renderConversations(Array.from(CHAT_CONFIG.conversations.values())); }
+    function refreshUsers() { const refreshBtn = event.currentTarget; refreshBtn.style.opacity = '0.5'; refreshBtn.style.pointerEvents = 'none'; showToast('正在刷新...'); Promise.all([ loadConversations(), loadOnlineUsers() ]).then(() => { refreshBtn.style.opacity = '1'; refreshBtn.style.pointerEvents = 'auto'; showToast('刷新完成'); }).catch(() => { refreshBtn.style.opacity = '1'; refreshBtn.style.pointerEvents = 'auto'; showToast('刷新失败'); }); }
+    function showSearch() { showToast('搜索功能开发中...'); }
+    function showNewChat() { showToast('新建聊天功能开发中...'); }
+    function showToast(message) { let toast = document.getElementById('global-toast'); if (!toast) { toast = document.createElement('div'); toast.id = 'global-toast'; toast.className = 'toast fade-in'; toast.style.cssText = `position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: var(--ink-black); color: var(--paper-white); padding: 12px 20px; border: 2px solid var(--ink-black); font-size: 14px; z-index: 2000; box-shadow: 2px 2px 0 rgba(0,0,0,0.2), 4px 4px 0 rgba(0,0,0,0.1);`; document.body.appendChild(toast); } toast.textContent = message; if (window.__toastTimer) clearTimeout(window.__toastTimer); window.__toastTimer = setTimeout(() => { const t = document.getElementById('global-toast'); if (t && t.parentNode) t.parentNode.removeChild(t); }, 2000); }
+    function setupScrollListener() { let lastScrollTop = 0; const header = document.querySelector('.header'); header.style.transform = 'translateY(0)'; document.addEventListener('scroll', function() { let scrollTop = window.pageYOffset || document.documentElement.scrollTop; if (scrollTop > lastScrollTop && scrollTop > 100) header.style.transform = 'translateY(-100%)'; else header.style.transform = 'translateY(0)'; lastScrollTop = scrollTop; }, { passive: true }); }
+    document.addEventListener('touchstart', function() {}, {passive: true});
+    document.addEventListener('touchmove', function() {}, {passive: true});
+</script>
+</body>
+</html>

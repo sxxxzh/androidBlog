@@ -150,59 +150,71 @@ fun StreamingVideoPreviewComponent(
         var fullscreenLoading by remember { mutableStateOf(true) }
         var scale by remember { mutableStateOf(1f) }
         var offset by remember { mutableStateOf(Offset.Zero) }
+        var fsPlaying by remember { mutableStateOf(false) }
+        var fullscreenVideoView by remember { mutableStateOf<android.widget.VideoView?>(null) }
         Dialog(onDismissRequest = { isFullscreen = false }, properties = DialogProperties(usePlatformDefaultWidth = false)) {
             Box(modifier = Modifier.fillMaxSize()) {
-                Box(
+                AndroidView(
+                    factory = { ctx ->
+                        android.widget.VideoView(ctx).apply {
+                            fullscreenVideoView = this
+                            setVideoURI(Uri.parse(videoUrl))
+                            keepScreenOn = true
+                            setOnPreparedListener {
+                                fullscreenLoading = false
+                                fsPlaying = true
+                                start()
+                            }
+                            setOnErrorListener { _, _, _ ->
+                                fullscreenLoading = false
+                                false
+                            }
+                            setOnCompletionListener { fsPlaying = false }
+                        }
+                    },
+                    update = { v ->
+                        fullscreenVideoView = v
+                        if (fsPlaying) v.start() else v.pause()
+                    },
                     modifier = Modifier
                         .fillMaxSize()
+                        .graphicsLayer {
+                            scaleX = scale
+                            scaleY = scale
+                            translationX = offset.x
+                            translationY = offset.y
+                        }
+                )
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
                         .pointerInput(Unit) {
                             detectTransformGestures { _, pan, zoom, _ ->
                                 scale = (scale * zoom).coerceIn(1f, 3f)
                                 offset += pan
                             }
                         }
-                ) {
-                    AndroidView(
-                        factory = { ctx ->
-                            android.widget.VideoView(ctx).apply {
-                                setVideoURI(Uri.parse(videoUrl))
-                                keepScreenOn = true
-                                setOnPreparedListener {
-                                    fullscreenLoading = false
-                                    start()
-                                }
-                                setOnErrorListener { _, _, _ ->
-                                    fullscreenLoading = false
-                                    false
-                                }
-                                setOnCompletionListener { }
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .graphicsLayer {
-                                scaleX = scale
-                                scaleY = scale
-                                translationX = offset.x
-                                translationY = offset.y
-                            }
-                    )
-                    if (fullscreenLoading) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
                         .pointerInput(Unit) {
-                            detectTapGestures(onDoubleTap = { isFullscreen = false })
+                            detectTapGestures(
+                                onTap = {
+                                    fsPlaying = !fsPlaying
+                                    val v = fullscreenVideoView
+                                    if (v != null) {
+                                        if (fsPlaying) v.start() else v.pause()
+                                    }
+                                },
+                                onDoubleTap = { isFullscreen = false }
+                            )
                         }
                 )
+                if (fullscreenLoading) {
+                    Box(
+                        modifier = Modifier.matchParentSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
         }
     }

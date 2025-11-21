@@ -41,9 +41,7 @@ fun LoginScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("登录") },
-                navigationIcon = {
-                    TextButton(onClick = onNavigateHome) { Text("主页") }
-                }
+                navigationIcon = {}
             )
         }
     ) { paddingValues ->
